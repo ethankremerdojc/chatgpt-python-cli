@@ -6,6 +6,8 @@ import regex as re
 
 messages = []
 
+BASE_DIR = os.getcwd()
+
 def handle_output(chat_response):
     print(f'\033[32mChatGPT: {chat_response} \033[39m ')
     if "```" in chat_response:
@@ -17,13 +19,19 @@ def handle_output(chat_response):
       if confirm == "y":
         file_name = input("Write file name\n: ")
 
-        path = f"/home/admin/chatgpt/gpt_code_snippets/{file_name}"
+        path = f"{BASE_DIR}/gpt_code_snippets/{file_name}"
+
+        if not os.path.exists(f"{BASE_DIR}/gpt_code_snippets"):
+           os.mkdir(f"{BASE_DIR}/gpt_code_snippets")
 
         with open(path, "w") as f:
           f.write("\n".join(code).replace("```", ""))
           print(f"wrote file to {path}")
 
+# TODO Figure out which device this is
 os.system('clear')
+os.system('cls')
+
 print("Welcome to the Pylon-ChatGPT CLI")
 
 while True:
